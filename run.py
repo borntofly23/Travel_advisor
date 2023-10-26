@@ -11,6 +11,8 @@ from bson import json_util
 from bson.json_util import dumps
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
+import requests
+from datetime import datetime, date, timedelta
 
 app = Flask(__name__)
 
@@ -49,7 +51,7 @@ def login():
         if user:
             if check_password_hash(user['password'], request.form['password']):
                 flash('Logged in successfully')
-                return render_template('home.html')
+                return redirect('/home')
             else:
                 flash('Incorrect password')
                 return render_template('login.html')
@@ -57,6 +59,61 @@ def login():
             flash('Email does not exist')
             return render_template('login.html')
     return render_template('login.html')
+
+@app.route('/home', methods=["GET", "POST"])
+def home():
+    if request.method == "POST":
+        details = request.form['subject']
+        # flights = requests.get("https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchAirport",
+        #                         headers = {
+        #                             'X-RapidAPI-Key': '14cb89a0e8mshe01e8ebf6bb311ap1caf5fjsnb60ad9d3484b',
+        #                             'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
+        #                         }, params={"query":details}).json()['data']
+        # if len(flights) == 0:
+        #     flash('No flights found')
+        #     return redirect('/home')
+
+        # weather = requests.get("https://weatherapi-com.p.rapidapi.com/current.json", headers={
+        #     "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+        #     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
+        # }, params={"q":details,"days":"1"}).json()
+
+        location = requests.get("https://booking-com.p.rapidapi.com/v1/hotels/locations",
+                                headers = {
+                                            "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+                                            "X-RapidAPI-Host": "booking-com.p.rapidapi.com"
+                                }, params={"name":details,"locale":"en-us"}).json()[0]
+        
+        location = {
+            'dest_id': location['dest_id'],
+            'dest_type': location['dest_type'],
+            'longitude': location['longitude'],
+            'latitude': location['latitude'],
+            'country': location['cc1'],
+        }
+
+        # hotels = requests.get("https://booking-com.p.rapidapi.com/v1/hotels/search", headers={
+        #             "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+        #             "X-RapidAPI-Host": "booking-com.p.rapidapi.com"
+        #         }, params={"checkin_date":date.today()  + timedelta(days=1),"dest_type":"city","units":"metric",
+        #                 "checkout_date":date.today()  + timedelta(days=2),
+        #                 "adults_number":"1","order_by":"popularity", "dest_id":location['dest_id'],"filter_by_currency":"INR",
+        #                 "locale":"en-us","room_number":"1"}).json()['result']
+        # if len(hotels) > 12:
+        #     hotels = hotels[:12]
+        
+        return render_template('details.html', data={
+            # 'flight': flights,
+            # 'weather': weather,
+            'location': location,
+            # 'hotels': hotels,
+            'count': {
+                # 'airports': len(flights),
+                # 'hotels': len(hotels),
+            },
+        })
+    elif request.method == "GET":
+        return render_template('home.html')
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -79,4 +136,4 @@ def register():
         return render_template('register.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 

@@ -4,9 +4,16 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>TravelJet</title>
+    <title>Squadfree Bootstrap Template - Index</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
+
+    <style>
+      #map {
+          height: 400px;
+          width: 100%;
+      }
+  </style>
 
     <!-- Favicons -->
     <link href="../static/assets/img/favicon.png" rel="icon" />
@@ -166,145 +173,106 @@
       </section>
       <!-- End About Section -->
 
-      <!-- ======= Cta Section ======= -->
-      <section id="cta" class="cta">
-        <div class="container" data-aos="zoom-in">
-          <div class="text-center">
-            <h3>Search for destination</h3>
-            <form action="/home" method="POST">
-                <p>
-                    <div class="form-group mt-3">
-                        <input
-                        type="text"
-                        class="form-control"
-                        name="subject"
-                        id="subject"
-                        placeholder="Search For a City, Place or Destination"
-                        required
-                        />
-                    </div>
+      Weather component to be inserted here
+
+      <!-- ======= Airports Section ======= -->
+      <section id="services" class="services">
+        <div class="container">
+          <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Airports</h2>
+          </div>
+
+          <div class="row">
+            {% for flight in data['flight'] %}
+
+            <div
+              class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+            >
+              <div class="icon-box" data-aos="fade-up">
+                <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                <h4 class="title"><a href="">{{ flight['name'] }}</a></h4>
+                <p class="description">
+                  {{ flight['details']['address'] }}
                 </p>
-                <input type="submit" value="Search" class="cta-btn" href="#" />
-            </form>
+                <p class="description">
+                  {{ flight['shortName'] }}
+                </p>
+                <p class="description">
+                  {{ flight['details']['grandparent_name'] }}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
       </section>
-      <!-- End Cta Section -->
+      <!-- End Services Section -->
 
-      <!-- ======= Contact Section ======= -->
-      <section id="contact" class="contact section-bg">
-        <div class="container" data-aos="fade-up">
-          <div class="section-title">
-            <h2>Contact</h2>
-            <p>
-              Magnam dolores commodi suscipit. Necessitatibus eius consequatur
-              ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam
-              quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.
-              Quia fugiat sit in iste officiis commodi quidem hic quas.
-            </p>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="info-box mb-4">
-                <i class="bx bx-map"></i>
-                <h3>Our Address</h3>
-                <p>A108 Adam Street, New York, NY 535022</p>
+      <p>
+        <div id="map">Map</div>
+        <script src="app.js"></script>
+      </p>
+      
+      <!-- ======= Counts Section ======= -->
+      <section id="counts" class="counts section-bg">
+        <div class="container">
+          <div class="row no-gutters">
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-emoji-smile"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="{{ data['count']['hotels'] }}"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Hotels</p>
               </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
-              <div class="info-box mb-4">
-                <i class="bx bx-envelope"></i>
-                <h3>Email Us</h3>
-                <p>contact@example.com</p>
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-journal-richtext"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="{{ data['count']['airports'] }}"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Nearby airports</p>
               </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
-              <div class="info-box mb-4">
-                <i class="bx bx-phone-call"></i>
-                <h3>Call Us</h3>
-                <p>+1 5589 55488 55</p>
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-headset"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="1463"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p><strong>Hours Of Support</strong> aut commodi quaerat</p>
               </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-6">
-              <iframe
-                class="mb-4 mb-lg-0"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                frameborder="0"
-                style="border: 0; width: 100%; height: 384px"
-                allowfullscreen
-              ></iframe>
-            </div>
-
-            <div class="col-lg-6">
-              <form
-                action="forms/contact.php"
-                method="post"
-                role="form"
-                class="php-email-form"
-              >
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="name"
-                      placeholder="Your Name"
-                      required
-                    />
-                  </div>
-                  <div class="col-md-6 form-group mt-3 mt-md-0">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Your Email"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                  />
-                </div>
-                <div class="form-group mt-3">
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="Message"
-                    required
-                  ></textarea>
-                </div>
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit">Send Message</button>
-                </div>
-              </form>
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-people"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="15"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p><strong>Hard Workers</strong> rerum asperiores dolor</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <!-- End Contact Section -->
+      <!-- End Counts Section -->
+
     </main>
     <!-- End #main -->
 
@@ -316,27 +284,6 @@
             <div class="col-lg-4 col-md-6">
               <div class="footer-info">
                 <h3>TravelJet</h3>
-                <p>
-                  Terna Engineering <br />
-                  Navi Mumbai, Nerul<br /><br />
-                  <strong>Phone:</strong> +1 5589 55488 55<br />
-                  <strong>Email:</strong> traveljet@example.com<br />
-                </p>
-                <div class="social-links mt-3">
-                  <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                  <a href="#" class="facebook"
-                    ><i class="bx bxl-facebook"></i
-                  ></a>
-                  <a href="#" class="instagram"
-                    ><i class="bx bxl-instagram"></i
-                  ></a>
-                  <a href="#" class="google-plus"
-                    ><i class="bx bxl-skype"></i
-                  ></a>
-                  <a href="#" class="linkedin"
-                    ><i class="bx bxl-linkedin"></i
-                  ></a>
-                </div>
               </div>
             </div>
 
@@ -430,8 +377,33 @@
     <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../static/assets/vendor/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
     <script src="../static/assets/js/main.js"></script>
+    <script>
+      const appId = 'quYzaUC2D07VZzZQYUL5';
+      const appCode = 'V1ozAOhfIoFWAV1_2LABcJyRwjhNMdguRh6smr1_Cuc';
+      const platform = new H.service.Platform({
+          app_id: appId,
+          app_code: appCode,
+          useHTTPS: true
+      });
+      const maptypes = platform.createDefaultLayers();
+
+      const map = new H.Map(document.getElementById('map'), maptypes.normal.map, {
+          center: { lat: 52.5200, lng: 13.4050 },
+          zoom: 10
+      });
+      const mapEvents = new H.mapevents.MapEvents(map);
+      const ui = H.ui.UI.createDefault(map, maptypes);
+      const behavior = new H.mapevents.Behavior(mapEvents);
+      function addMarker(latitude, longitude, label) {
+          const marker = new H.map.Marker({ lat: latitude, lng: longitude });
+          if (label) {
+              marker.setData(label);
+          }
+          map.addObject(marker);
+      }
+      addMarker(40.7128, -74.0060, "New York City");
+    </script>
+
   </body>
 </html>

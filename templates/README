@@ -1,0 +1,58 @@
+
+Weather code
+
+      <!-- ======= Team Section ======= -->
+      <section id="team" class="team">
+        <div class="container">
+          <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Weather</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="info-box mb-4">
+                <i class="bx bx-map"></i>
+                <h3><img src="{{ data['weather']['current']['condition']['icon'] }}" class="img-fluid" alt="Weather Image"></h3>
+                <p>{{ data['weather']['location']['name'] }}, {{ data['weather']['location']['region'] }}, {{ data['weather']['location']['country'] }}.</p>
+                <p>{{ data['weather']['location']['localtime'] }}</p>
+                <p>Temperature: {{ data['weather']['current']['temp_c'] }} (<sup>o</sup>C)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Team Section -->
+
+Hotels code
+
+
+
+      <!-- ======= Hotels Section ======= -->
+      <section id="services" class="services">
+        <div class="container">
+          <div class="section-title aos-init aos-animate" data-aos="fade-in" data-aos-delay="100">
+            <h2>Hotels</h2>
+            <p>
+              Magnam dolores commodi suscipit. Necessitatibus eius consequatur
+              ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam
+              quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.
+              Quia fugiat sit in iste officiis commodi quidem hic quas.
+            </p>
+          </div>
+
+          <div class="row">
+            {% for hotel in data['hotels'] %}
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box aos-init aos-animate" data-aos="fade-up">
+                <div class="icon"><i class="bx bxl-food"></i></div>
+                <h4 class="title"><a href="">{{ hotel['hotel_name'] }}</a></h4>
+                <p class="description">
+                  {{ hotel['address_trans'] }} {{ hotel['district'] }} {{ hotel['city_name_en'] }} 
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      <!-- End Services Section -->
