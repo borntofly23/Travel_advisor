@@ -4,16 +4,22 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Squadfree Bootstrap Template - Index</title>
+    <title>TravelJet</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
-
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
     <style>
-      #map {
-          height: 400px;
-          width: 100%;
-      }
-  </style>
+        #mapContainer {
+            width: 100%;
+            height: 400px;
+            background: grey;
+        }
+    </style>
+    </head>
+      <body>
 
     <!-- Favicons -->
     <link href="../static/assets/img/favicon.png" rel="icon" />
@@ -65,20 +71,18 @@
           <h1 class="text-light">
             <a href="index.html"><span>Traveljet</span></a>
           </h1>
-          <!-- Uncomment below if you prefer to use an image logo -->
-          <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>
 
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto active" href="#about">About</a></li>
-            <li><a class="nav-link scrollto" href="#flights">Flights</a></li>
-            <li><a class="nav-link scrollto" href="#services">Hotels</a></li>
+            <li><a class="nav-link scrollto active" href="#map">Map</a></li>
+            <li><a class="nav-link scrollto" href="#weather">Weather</a></li>
+            <li><a class="nav-link scrollto" href="#airports">Airports</a></li>
             <li>
-              <a class="nav-link scrollto" href="#portfolio">Car Rentals</a>
+              <a class="nav-link scrollto" href="#hotel">Hotels</a>
             </li>
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <li><a class="nav-link scrollto" href="#attractions">Attractions</a></li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
@@ -102,6 +106,169 @@
     <!-- End Hero -->
 
     <main id="main">
+
+      <section id="map">
+        <div id="mapContainer"></div>
+      </aection>
+
+      <!-- ======= Weather Section ======= -->
+
+            <!-- ======= Team Section ======= -->
+            <section id="team" class="team">
+              <div class="container">
+                <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                  <h2>Weather</h2>
+                </div>
+      
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="info-box mb-4">
+                      <i class="bx bx-map"></i>
+                      <h3><img src="{{ data['weather']['current']['condition']['icon'] }}" class="img-fluid" alt="Weather Image"></h3>
+                      <p>{{ data['weather']['location']['name'] }}, {{ data['weather']['location']['region'] }}, {{ data['weather']['location']['country'] }}.</p>
+                      <p>{{ data['weather']['location']['localtime'] }}</p>
+                      <p>Temperature: {{ data['weather']['current']['temp_c'] }} (<sup>o</sup>C)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- End Team Section -->
+
+
+      <!-- ======= Airports Section ======= -->
+      <section id="airports" class="services">
+        <div class="container">
+          <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Airports</h2>
+          </div>
+
+          <div class="row">
+            {% for flight in data['flight'] %}
+
+            <div
+              class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+            >
+              <div class="icon-box" data-aos="fade-up">
+                <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                <h4 class="title"><a href="">{{ flight['name'] }}</a></h4>
+                <p class="description">
+                  {{ flight['details']['address'] }}
+                </p>
+                <p class="description">
+                  {{ flight['shortName'] }}
+                </p>
+                <p class="description">
+                  {{ flight['details']['grandparent_name'] }}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      <!-- End Services Section -->
+
+      <!-- ======= Counts Section ======= -->
+      <section id="counts" class="counts section-bg">
+        <div class="container">
+          <div class="row no-gutters">
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-emoji-smile"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="{{ data['count']['hotels'] }}"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Hotels</p>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-journal-richtext"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="{{ data['count']['airports'] }}"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Nearby airports</p>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+              <div class="count-box">
+                <i class="bi bi-headset"></i>
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="50"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Nearby attractions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Counts Section -->
+
+      <!-- ======= Hotels Section ======= -->
+      <section id="hotel" class="services">
+        <div class="container">
+          <div class="section-title aos-init aos-animate" data-aos="fade-in" data-aos-delay="100">
+            <h2>Hotels</h2>
+          </div>
+
+          <div class="row">
+            {% for hotel in data['hotels'] %}
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box aos-init aos-animate" data-aos="fade-up">
+                <div class="icon"><i class="bx bxl-food"></i></div>
+                <h4 class="title"><a href="">{{ hotel['hotel_name'] }}</a></h4>
+                <p class="description">
+                  {{ hotel['address_trans'] }} {{ hotel['district'] }} {{ hotel['city_name_en'] }} 
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      <!-- End Services Section -->
+
+      <section id="attractions" class="services">
+        <div class="container">
+          <div class="section-title aos-init aos-animate" data-aos="fade-in" data-aos-delay="100">
+            <h2>Attractions</h2>
+          </div>
+
+          <div class="row">
+            {% set attractions_count = 0  %}
+            {% for place in data['attractions'] %}
+            {% if place['properties']['name'] != "" %}
+            {% set attractions_count = attractions_count + 1 %}
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box aos-init aos-animate" data-aos="fade-up">
+                <div class="icon"><i class="bx bxl-food"></i></div>
+                <h4 class="title"><a href="">{{ place['properties']['name'] }}</a></h4>
+                <p class="description">
+                  {% set kinds = place['properties']['kinds'].split(',') %}
+                  {% for kind in kinds %}
+                    <span>{{ kind|capitalize }}</span>
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
       <!-- ======= About Section ======= -->
       <section id="about" class="about">
         <div class="container">
@@ -150,7 +317,7 @@
                     <i class="bx bx-images"></i>
                     <h4>No data breach</h4>
                     <p>
-                      AWe don't train any AI with your data. Beacuse we don't know how to do so !😅
+                      We don't train any AI with your data. Beacuse we don't know how to do so !😅
                     </p>
                   </div>
                   <div
@@ -173,106 +340,6 @@
       </section>
       <!-- End About Section -->
 
-      Weather component to be inserted here
-
-      <!-- ======= Airports Section ======= -->
-      <section id="services" class="services">
-        <div class="container">
-          <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-            <h2>Airports</h2>
-          </div>
-
-          <div class="row">
-            {% for flight in data['flight'] %}
-
-            <div
-              class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
-            >
-              <div class="icon-box" data-aos="fade-up">
-                <div class="icon"><i class="bx bxl-dribbble"></i></div>
-                <h4 class="title"><a href="">{{ flight['name'] }}</a></h4>
-                <p class="description">
-                  {{ flight['details']['address'] }}
-                </p>
-                <p class="description">
-                  {{ flight['shortName'] }}
-                </p>
-                <p class="description">
-                  {{ flight['details']['grandparent_name'] }}
-                </p>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </section>
-      <!-- End Services Section -->
-
-      <p>
-        <div id="map">Map</div>
-        <script src="app.js"></script>
-      </p>
-      
-      <!-- ======= Counts Section ======= -->
-      <section id="counts" class="counts section-bg">
-        <div class="container">
-          <div class="row no-gutters">
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-              <div class="count-box">
-                <i class="bi bi-emoji-smile"></i>
-                <span
-                  data-purecounter-start="0"
-                  data-purecounter-end="{{ data['count']['hotels'] }}"
-                  data-purecounter-duration="1"
-                  class="purecounter"
-                ></span>
-                <p>Hotels</p>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-              <div class="count-box">
-                <i class="bi bi-journal-richtext"></i>
-                <span
-                  data-purecounter-start="0"
-                  data-purecounter-end="{{ data['count']['airports'] }}"
-                  data-purecounter-duration="1"
-                  class="purecounter"
-                ></span>
-                <p>Nearby airports</p>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-              <div class="count-box">
-                <i class="bi bi-headset"></i>
-                <span
-                  data-purecounter-start="0"
-                  data-purecounter-end="1463"
-                  data-purecounter-duration="1"
-                  class="purecounter"
-                ></span>
-                <p><strong>Hours Of Support</strong> aut commodi quaerat</p>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-              <div class="count-box">
-                <i class="bi bi-people"></i>
-                <span
-                  data-purecounter-start="0"
-                  data-purecounter-end="15"
-                  data-purecounter-duration="1"
-                  class="purecounter"
-                ></span>
-                <p><strong>Hard Workers</strong> rerum asperiores dolor</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Counts Section -->
-
     </main>
     <!-- End #main -->
 
@@ -286,78 +353,14 @@
                 <h3>TravelJet</h3>
               </div>
             </div>
-
-            <div class="col-lg-2 col-md-6 footer-links">
-              <h4>Useful Links</h4>
-              <ul>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">Home</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">About us</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">Services</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Terms of service</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Privacy policy</a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="col-lg-2 col-md-6 footer-links">
-              <h4>Our Services</h4>
-              <ul>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">Web Design</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Web Development</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Product Management</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">Marketing</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Graphic Design</a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="col-lg-4 col-md-6 footer-newsletter">
-              <h4>Our Newsletter</h4>
-              <form action="" method="post">
-                <input type="email" name="email" /><input
-                  type="submit"
-                  value="Subscribe"
-                />
-              </form>
-            </div>
           </div>
         </div>
       </div>
 
       <div class="container">
         <div class="copyright">
-          &copy; Copyright <strong><span>Squadfree</span></strong
-          >. All Rights Reserved
-        </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          &copy; Copyright <strong><span>TravelJet</span></strong
+          >
         </div>
       </div>
     </footer>
@@ -370,6 +373,7 @@
     ></a>
 
     <!-- Vendor JS Files -->
+
     <script src="../static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="../static/assets/vendor/aos/aos.js"></script>
     <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -379,30 +383,40 @@
     <script src="../static/assets/vendor/php-email-form/validate.js"></script>
     <script src="../static/assets/js/main.js"></script>
     <script>
-      const appId = 'quYzaUC2D07VZzZQYUL5';
-      const appCode = 'V1ozAOhfIoFWAV1_2LABcJyRwjhNMdguRh6smr1_Cuc';
-      const platform = new H.service.Platform({
-          app_id: appId,
-          app_code: appCode,
-          useHTTPS: true
-      });
-      const maptypes = platform.createDefaultLayers();
+      // Initialize the platform
 
-      const map = new H.Map(document.getElementById('map'), maptypes.normal.map, {
-          center: { lat: 52.5200, lng: 13.4050 },
-          zoom: 10
+      var data = {{ data['location']|tojson }};
+      console.log(data);
+
+      var platform = new H.service.Platform({
+          apikey: 'V1ozAOhfIoFWAV1_2LABcJyRwjhNMdguRh6smr1_Cuc' // Replace 'YOUR_API_KEY' with your actual API key
       });
-      const mapEvents = new H.mapevents.MapEvents(map);
-      const ui = H.ui.UI.createDefault(map, maptypes);
-      const behavior = new H.mapevents.Behavior(mapEvents);
-      function addMarker(latitude, longitude, label) {
-          const marker = new H.map.Marker({ lat: latitude, lng: longitude });
-          if (label) {
-              marker.setData(label);
+
+      // Obtain the default map types from the platform object
+      var defaultLayers = platform.createDefaultLayers();
+
+      // Instantiate (and display) a map object:
+      var map = new H.Map(
+          document.getElementById('mapContainer'),
+          defaultLayers.vector.normal.map,
+          {
+              zoom: 12,
+              center: { lat: data.latitude, lng:data.longitude}
           }
-          map.addObject(marker);
-      }
-      addMarker(40.7128, -74.0060, "New York City");
+      );
+
+      // Add a marker to the map
+      var marker = new H.map.Marker({lat: data.latitude, lng: data.longitude});
+      map.addObject(marker);
+
+      // Add behavior to the map: Zoom in/out with the mouse wheel
+      var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+      // Create the default UI components for the map
+      var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+      var zoomControl = new H.ui.ZoomControl();
+        ui.addControl('zoom', zoomControl);
     </script>
 
   </body>
