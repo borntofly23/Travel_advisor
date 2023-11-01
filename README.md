@@ -48,7 +48,7 @@ Before running the application, ensure you have the following:
 2. Run the Flask application:
 
     ```bash
-    python app.py
+    python run.py
     ```
 
 3. Access the application through a web browser at `http://localhost:5000` or the specified port.
