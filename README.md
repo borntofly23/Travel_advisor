@@ -48,7 +48,7 @@ Before running the application, ensure you have the following:
 2. Run the Flask application:
 
     ```bash
-    python app.py
+    python run.py
     ```
 
 3. Access the application through a web browser at `http://localhost:5000` or the specified port.
@@ -61,12 +61,11 @@ Before running the application, ensure you have the following:
 
 ## Contributors
 
-- [Your Name](https://github.com/yourusername)
-- [Contributor Name](https://github.com/contributorusername)
+- Rushikesh Jadhav (https://github.com/borntofly23)
 
 ## License
 
-This project is licensed under the [Your License] License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
@@ -75,4 +74,4 @@ This project is licensed under the [Your License] License - see the [LICENSE](LI
 
 ---
 
-This README template provides a structured overview of your Travel Advisor Flask application, including its features, prerequisites, installation, usage guidelines, contributors, license information, and acknowledgments. Customize the sections and details as per your actual project's structure and requirements.
+This README template provides a structured overview of the Travel Advisor Flask application, including its features, prerequisites, installation, usage guidelines, contributors, license information, and acknowledgments. Go through requirements.txt if still any library is missing.
