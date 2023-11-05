@@ -66,7 +66,7 @@ def home():
         details = request.form['subject']
         flights = requests.get("https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchAirport",
                                 headers = {
-                                    'X-RapidAPI-Key': '14cb89a0e8mshe01e8ebf6bb311ap1caf5fjsnb60ad9d3484b',
+                                    'X-RapidAPI-Key': 'YOUR API KEY',
                                     'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
                                 }, params={"query":details}).json()['data']
         if len(flights) == 0:
@@ -74,7 +74,7 @@ def home():
             return redirect('/home')
 
         weather = requests.get("https://weatherapi-com.p.rapidapi.com/current.json", headers={
-            "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+            "X-RapidAPI-Key": "YOUR API KEY",
             "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
         }, params={"q":details,"days":"1"}).json()
 
@@ -84,7 +84,7 @@ def home():
         if not location:
             location = requests.get("https://booking-com.p.rapidapi.com/v1/hotels/locations",
                                     headers = {
-                                                "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+                                                "X-RapidAPI-Key": "YOUR API KEY",
                                                 "X-RapidAPI-Host": "booking-com.p.rapidapi.com"
                                     }, params={"name":details,"locale":"en-us"}).json()[0]
             location = {
@@ -101,7 +101,7 @@ def home():
         
 
         hotels = requests.get("https://booking-com.p.rapidapi.com/v1/hotels/search", headers={
-                    "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+                    "X-RapidAPI-Key": "YOUR API KEY",
                     "X-RapidAPI-Host": "booking-com.p.rapidapi.com"
                 }, params={"checkin_date":date.today()  + timedelta(days=1),"dest_type":"city","units":"metric",
                         "checkout_date":date.today()  + timedelta(days=2),
@@ -111,7 +111,7 @@ def home():
             hotels = hotels[:12]
 
         attractions = requests.get("https://opentripmap-places-v1.p.rapidapi.com/en/places/radius", headers={
-            "X-RapidAPI-Key": "64506c4a2cmsh6ec927e08a29bb7p1a899djsn638614c3fbb1",
+            "X-RapidAPI-Key": "YOUR API KEY",
             "X-RapidAPI-Host": "opentripmap-places-v1.p.rapidapi.com"
         }, params={"radius":"5000","lon":location['longitude'],"lat":location['latitude']}).json()['features'][:50]
 
